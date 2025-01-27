@@ -203,6 +203,10 @@ class Play extends Phaser.Scene {
     update(time, delta) {
         // console.log("Time:", time);
         // console.log("Delta:", delta);
+        let cursorX = this.input.activePointer.x;
+        let cursorY = this.input.activePointer.y;
+
+        console.log("Cursor X:", cursorX, "Cursor Y:", cursorY);
 
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyRESET)) {
@@ -217,6 +221,12 @@ class Play extends Phaser.Scene {
         } else {
             this.fire.setAlpha(0);
         }
+
+        if (this.input.activePointer.buttons == 1 && !this.isFiring) {
+            this.p1Rocket.fire();
+        }
+
+        this.p1Rocket.move(this.p1Rocket.x - cursorX);
 
         this.starfield.tilePositionX -= 4;
         this.p1Rocket.update();
