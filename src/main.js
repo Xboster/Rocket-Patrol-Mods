@@ -8,7 +8,6 @@
 // Implement the 'FIRE' UI text from the original game (1)
 //      added Fire to the right of score display that shows up when rocket is fired
 // Randomize each spaceship's movement direction at the start of each play (1)
-// 
 // Allow the player to control the Rocket after it's fired (1)
 //      player can use <- -> to move the rocket after firing, rocket now resets at the middle
 

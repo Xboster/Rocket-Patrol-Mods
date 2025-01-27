@@ -79,6 +79,10 @@ class Play extends Phaser.Scene {
             0,
             10
         ).setOrigin(0, 0);
+        // randomize direction at start of game
+        this.ship01.setFlipX(Phaser.Math.RND.integerInRange(0, 1));
+        this.ship02.setFlipX(Phaser.Math.RND.integerInRange(0, 1));
+        this.ship03.setFlipX(Phaser.Math.RND.integerInRange(0, 1));
 
         // define keys
         keyFIRE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
