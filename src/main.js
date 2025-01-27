@@ -14,7 +14,7 @@
 //      added timer to top right of screen
 // Create a new title screen (e.g., new artwork, typography, layout) (3)
 //      new title screen with another difficulty mode, hover and fire to start
-// TODO: Implement mouse control for player movement and left mouse click to fire (5)
+// Implement mouse control for player movement and left mouse click to fire (5)
 // TODO: Implement a new timing/scoring mechanism that adds time to the clock for successful hits and subtracts time for misses (5)
 
 let config = {
