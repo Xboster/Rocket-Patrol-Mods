@@ -29,10 +29,10 @@ class Rocket extends Phaser.GameObjects.Sprite {
             this.y -= this.moveSpeed;
         }
         // reset on miss
-        if (this.y <= borderUISize * 3 + borderPadding) {
-            // reset rocket to "ground"
-            this.reset();
-        }
+        // if (this.y <= borderUISize * 3 + borderPadding) {
+        //     // reset rocket to "ground"
+        //     this.reset();
+        // }
     }
     reset() {
         this.isFiring = false;

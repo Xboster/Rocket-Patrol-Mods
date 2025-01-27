@@ -15,8 +15,9 @@
 // Create a new title screen (e.g., new artwork, typography, layout) (3)
 //      new title screen with another difficulty mode, hover and fire to start
 // Implement mouse control for player movement and left mouse click to fire (5)
-// TODO: Implement a new timing/scoring mechanism that adds time to the clock for successful hits and subtracts time for misses (5)
-
+//      rocket goes to x axis of pointer, left click to fire rocket
+// Implement a new timing/scoring mechanism that adds time to the clock for successful hits and subtracts time for misses (5)
+//      add 2 seconds on hit, minus 5 seconds on hit
 let config = {
     type: Phaser.AUTO,
     width: 640,

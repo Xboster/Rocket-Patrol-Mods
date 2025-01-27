@@ -96,7 +96,7 @@ class Play extends Phaser.Scene {
         // initialize score
         this.p1Score = 0;
         // display score
-        let scoreConfig = {
+        this.scoreConfig = {
             fontFamily: "Courier",
             fontSize: "28px",
             backgroundColor: "#F3B141",
@@ -112,7 +112,7 @@ class Play extends Phaser.Scene {
             borderUISize + borderPadding,
             borderUISize + borderPadding * 2,
             this.p1Score,
-            scoreConfig
+            this.scoreConfig
         );
 
         // display firing
@@ -161,32 +161,6 @@ class Play extends Phaser.Scene {
         // GAME OVER flag
         this.gameOver = false;
 
-        // 60-second play clock
-        scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(
-            game.settings.gameTimer,
-            () => {
-                this.add
-                    .text(
-                        game.config.width / 2,
-                        game.config.height / 2,
-                        "GAME OVER",
-                        scoreConfig
-                    )
-                    .setOrigin(0.5);
-                this.add
-                    .text(
-                        game.config.width / 2,
-                        game.config.height / 2 + 64,
-                        "Press (R) to Restart",
-                        scoreConfig
-                    )
-                    .setOrigin(0.5);
-                this.gameOver = true;
-            },
-            null,
-            this
-        );
         // speed increase that happens after 30 seconds
         this.clock = this.time.delayedCall(
             30000,
@@ -217,6 +191,7 @@ class Play extends Phaser.Scene {
         }
 
         if (this.p1Rocket.isFiring) {
+            console.log(this.p1Rocket.y);
             this.fire.setAlpha(1);
         } else {
             this.fire.setAlpha(0);
@@ -248,6 +223,10 @@ class Play extends Phaser.Scene {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
+        if (this.p1Rocket.y <= borderUISize * 3 + borderPadding) {
+            this.p1Rocket.reset();
+            this.timeLeft -= 5000;
+        }
         if (!this.gameOver) {
             this.p1Rocket.update(); // update rocket sprite
             this.ship01.update(); // update spaceships (x3)
@@ -258,6 +237,27 @@ class Play extends Phaser.Scene {
         // timer
         this.timeLeft -= delta;
         this.timer.text = Math.ceil(this.timeLeft / 1000) + "s";
+
+        if (this.timeLeft <= 0 && !this.gameOver) {
+            this.scoreConfig.fixedWidth = 0;
+            this.add
+                .text(
+                    game.config.width / 2,
+                    game.config.height / 2,
+                    "GAME OVER",
+                    this.scoreConfig
+                )
+                .setOrigin(0.5);
+            this.add
+                .text(
+                    game.config.width / 2,
+                    game.config.height / 2 + 64,
+                    "Press (R) to Restart",
+                    this.scoreConfig
+                )
+                .setOrigin(0.5);
+            this.gameOver = true;
+        }
     }
 
     checkCollision(rocket, ship) {
@@ -287,8 +287,11 @@ class Play extends Phaser.Scene {
             boom.destroy(); // remove explosion sprite
         });
         // score add and text update
-        this.p1Score += ship.points;
-        this.scoreLeft.text = this.p1Score;
+        if (!this.gameOver) {
+            this.p1Score += ship.points;
+            this.scoreLeft.text = this.p1Score;
+        }
         this.sound.play("sfx-explosion");
+        this.timeLeft += 2000;
     }
 }
