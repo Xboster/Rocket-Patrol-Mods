@@ -10,8 +10,8 @@
 // Randomize each spaceship's movement direction at the start of each play (1)
 // Allow the player to control the Rocket after it's fired (1)
 //      player can use <- -> to move the rocket after firing, rocket now resets at the middle
-
-// TODO: Display the time remaining (in seconds) on the screen (3)
+// Display the time remaining (in seconds) on the screen (3)
+//      added timer to top right of screen
 // TODO: Create a new title screen (e.g., new artwork, typography, layout) (3)
 // TODO: Implement mouse control for player movement and left mouse click to fire (5)
 // TODO: Implement a new timing/scoring mechanism that adds time to the clock for successful hits and subtracts time for misses (5)

@@ -134,6 +134,29 @@ class Play extends Phaser.Scene {
             "FIRE",
             fireConfig
         );
+        this.timeLeft = this.game.settings.gameTimer;
+        // display timer
+        let timeConfig = {
+            fontFamily: "Courier",
+            fontSize: "28px",
+            backgroundColor: "#F3B141",
+            color: "#843605",
+            align: "right",
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 75,
+        };
+
+        this.timer = this.add.text(
+            game.config.width -
+                (borderUISize + borderPadding) -
+                timeConfig.fixedWidth,
+            borderUISize + borderPadding * 2,
+            this.timer / 1000 + "s",
+            timeConfig
+        );
 
         // GAME OVER flag
         this.gameOver = false;
@@ -177,7 +200,10 @@ class Play extends Phaser.Scene {
             this
         );
     }
-    update() {
+    update(time, delta) {
+        // console.log("Time:", time);
+        // console.log("Delta:", delta);
+
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyRESET)) {
             this.scene.restart();
@@ -218,6 +244,10 @@ class Play extends Phaser.Scene {
             this.ship02.update();
             this.ship03.update();
         }
+
+        // timer
+        this.timeLeft -= delta;
+        this.timer.text = Math.ceil(this.timeLeft / 1000) + "s";
     }
 
     checkCollision(rocket, ship) {
