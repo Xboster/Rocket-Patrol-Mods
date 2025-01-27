@@ -12,7 +12,8 @@
 //      player can use <- -> to move the rocket after firing, rocket now resets at the middle
 // Display the time remaining (in seconds) on the screen (3)
 //      added timer to top right of screen
-// TODO: Create a new title screen (e.g., new artwork, typography, layout) (3)
+// Create a new title screen (e.g., new artwork, typography, layout) (3)
+//      new title screen with another difficulty mode, hover and fire to start
 // TODO: Implement mouse control for player movement and left mouse click to fire (5)
 // TODO: Implement a new timing/scoring mechanism that adds time to the clock for successful hits and subtracts time for misses (5)
 

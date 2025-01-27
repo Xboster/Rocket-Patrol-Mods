@@ -33,49 +33,95 @@ class Menu extends Phaser.Scene {
             frameRate: 30,
         });
 
-        let menuConfig = {
-            fontFamily: "Courier",
+        this.selected = 1;
+        this.menuConfig = {
+            fontFamily: "monospace",
             fontSize: "28px",
-            backgroundColor: "#F3B141",
-            color: "#843605",
+            backgroundColor: "#00FF00",
+            color: "#000000",
             align: "right",
             padding: {
                 top: 5,
                 bottom: 5,
             },
             fixedWidth: 0,
+            strokeThickness: 0,
+            shadow: {
+                offsetX: 0,
+                offsetY: 0,
+                color: "#EEEEEE",
+                blur: 0,
+                stroke: 0,
+                fill: 0,
+            },
+        };
+
+        this.menuConfigSelected = {
+            fontFamily: "monospace",
+            fontSize: "28px",
+            backgroundColor: "#00FF00",
+            color: "#000000",
+            align: "right",
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0,
+            strokeThickness: 3,
+            shadow: {
+                offsetX: 3,
+                offsetY: 2,
+                color: "#EEEEEE",
+                blur: 0,
+                stroke: true,
+                fill: true,
+            },
         };
 
         this.add
             .text(
                 game.config.width / 2,
-                game.config.height / 2 - borderUISize - borderPadding,
-                "ROCKET PATROL",
-                menuConfig
+                game.config.height / 3 - borderUISize - borderPadding,
+                "ROCKET PATROL REDUX",
+                this.menuConfig
             )
             .setOrigin(0.5);
 
         this.add
             .text(
                 game.config.width / 2,
-                game.config.height / 2,
+                game.config.height - borderUISize / 2,
                 "USE <- -> arrows to move & (F) to fire",
-                menuConfig
+                this.menuConfig
             )
             .setOrigin(0.5);
-        menuConfig.backgroundColor = "#00FF00";
-        menuConfig.color = "#000";
+        this.menuConfig.backgroundColor = "#00FF00";
+        this.menuConfig.color = "#000";
 
-        this.add
+        this.easy = this.add
             .text(
-                game.config.width / 2,
-                game.config.height / 2 + borderUISize + borderPadding,
-                "Press <- for Novice or -> for Expert",
-                menuConfig
+                (borderUISize + borderPadding) * 2,
+                game.config.height / 2 - (borderUISize + borderPadding),
+                "1. Easy Mode",
+                this.menuConfig
             )
-            .setOrigin(0.5);
-
-        // this.scene.start("playScene");
+            .setOrigin(0);
+        this.normal = this.add
+            .text(
+                (borderUISize + borderPadding) * 2,
+                game.config.height / 2,
+                "2. Normal Mode",
+                this.menuConfig
+            )
+            .setOrigin(0);
+        this.hard = this.add
+            .text(
+                (borderUISize + borderPadding) * 2,
+                game.config.height / 2 + (borderUISize + borderPadding),
+                "3. Hard Mode",
+                this.menuConfig
+            )
+            .setOrigin(0);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(
@@ -84,25 +130,67 @@ class Menu extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(
             Phaser.Input.Keyboard.KeyCodes.RIGHT
         );
+        keyFIRE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
     }
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            // easy mode
-            game.settings = {
-                spaceshipSpeed: 3,
-                gameTimer: 60000,
-            };
-            this.sound.play("sfx-select");
-            this.scene.start("playScene");
+            if (this.selected > 1 && this.selected <= 3) {
+                this.selected -= 1;
+            }
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-            // hard mode
-            game.settings = {
-                spaceshipSpeed: 4,
-                gameTimer: 45000,
-            };
-            this.sound.play("sfx-select");
-            this.scene.start("playScene");
+            if (this.selected >= 1 && this.selected < 3) {
+                this.selected += 1;
+            }
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyFIRE)) {
+            switch (this.selected) {
+                case 1:
+                    console.log("Easy mode activated.");
+                    game.settings = {
+                        spaceshipSpeed: 2,
+                        gameTimer: 75000,
+                    };
+                    this.sound.play("sfx-select");
+                    this.scene.start("playScene");
+                    break;
+                case 2:
+                    console.log("Normal mode activated.");
+                    // hard mode
+                    game.settings = {
+                        spaceshipSpeed: 3,
+                        gameTimer: 60000,
+                    };
+                    this.sound.play("sfx-select");
+                    this.scene.start("playScene");
+                    break;
+                case 3:
+                    console.log("Hard mode activated.");
+                    // hard mode
+                    game.settings = {
+                        spaceshipSpeed: 4,
+                        gameTimer: 45000,
+                    };
+                    this.sound.play("sfx-select");
+                    this.scene.start("playScene");
+                    break;
+                default:
+                    console.log("Invalid difficulty.");
+            }
+        }
+
+        this.easy.setStyle(this.menuConfig);
+        this.normal.setStyle(this.menuConfig);
+        this.hard.setStyle(this.menuConfig);
+
+        if (this.selected == 1) {
+            this.easy.setStyle(this.menuConfigSelected);
+        }
+        if (this.selected == 2) {
+            this.normal.setStyle(this.menuConfigSelected);
+        }
+        if (this.selected == 3) {
+            this.hard.setStyle(this.menuConfigSelected);
         }
     }
 }
