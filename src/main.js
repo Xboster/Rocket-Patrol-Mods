@@ -5,8 +5,10 @@
 // Implement the speed increase that happens after 30 seconds in the original game (1)
 //      added method in spaceship.js to increase speed
 //      after 30 seconds calls method in spaceship.js to increase speed
-// TODO: Implement the 'FIRE' UI text from the original game (1)
-// TODO: Randomize each spaceship's movement direction at the start of each play (1)
+// Implement the 'FIRE' UI text from the original game (1)
+//      added Fire to the right of score display that shows up when rocket is fired
+// Randomize each spaceship's movement direction at the start of each play (1)
+// 
 // Allow the player to control the Rocket after it's fired (1)
 //      player can use <- -> to move the rocket after firing, rocket now resets at the middle
 

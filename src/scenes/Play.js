@@ -182,8 +182,10 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            console.log("test" + game.settings.time);
+        if (this.p1Rocket.isFiring) {
+            this.fire.setAlpha(1);
+        } else {
+            this.fire.setAlpha(0);
         }
 
         this.starfield.tilePositionX -= 4;
